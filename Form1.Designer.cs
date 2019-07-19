@@ -40,6 +40,10 @@
 			this.light74 = new System.Windows.Forms.Label();
 			this.light75 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.haveCarLight = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.NoCarLight = new System.Windows.Forms.Label();
+			this.label16 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
@@ -64,13 +68,21 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.close = new System.Windows.Forms.Button();
 			this.label11 = new System.Windows.Forms.Label();
-			this.label16 = new System.Windows.Forms.Label();
-			this.NoCarLight = new System.Windows.Forms.Label();
-			this.label18 = new System.Windows.Forms.Label();
-			this.haveCarLight = new System.Windows.Forms.Label();
+			this.ethConfiggroupBox = new System.Windows.Forms.GroupBox();
+			this.listenstatelabel = new System.Windows.Forms.Label();
+			this.deviceIPstatelabel = new System.Windows.Forms.Label();
+			this.startListenbutton = new System.Windows.Forms.Button();
+			this.deviceIPlabel = new System.Windows.Forms.Label();
+			this.connectstatelabel = new System.Windows.Forms.Label();
+			this.label87 = new System.Windows.Forms.Label();
+			this.severPorttextBox = new System.Windows.Forms.TextBox();
+			this.severPortlabel = new System.Windows.Forms.Label();
+			this.severIPcomboBox = new System.Windows.Forms.ComboBox();
+			this.severIPlabel = new System.Windows.Forms.Label();
 			this.CommSet_groupBox.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.ethConfiggroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// CommSet_groupBox
@@ -279,7 +291,7 @@
 			this.groupBox2.Controls.Add(this.light74);
 			this.groupBox2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(111)))), ((int)(((byte)(61)))));
-			this.groupBox2.Location = new System.Drawing.Point(9, 241);
+			this.groupBox2.Location = new System.Drawing.Point(9, 353);
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
@@ -288,6 +300,51 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Sensor Status";
 			this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+			// 
+			// haveCarLight
+			// 
+			this.haveCarLight.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.haveCarLight.AutoSize = true;
+			this.haveCarLight.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.haveCarLight.ForeColor = System.Drawing.Color.DarkGray;
+			this.haveCarLight.Location = new System.Drawing.Point(284, 370);
+			this.haveCarLight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.haveCarLight.Name = "haveCarLight";
+			this.haveCarLight.Size = new System.Drawing.Size(43, 30);
+			this.haveCarLight.TabIndex = 39;
+			this.haveCarLight.Text = "●";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(508, 370);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(79, 23);
+			this.label18.TabIndex = 38;
+			this.label18.Text = "No Car";
+			this.label18.Click += new System.EventHandler(this.label18_Click);
+			// 
+			// NoCarLight
+			// 
+			this.NoCarLight.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.NoCarLight.AutoSize = true;
+			this.NoCarLight.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.NoCarLight.ForeColor = System.Drawing.Color.DarkGray;
+			this.NoCarLight.Location = new System.Drawing.Point(706, 370);
+			this.NoCarLight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.NoCarLight.Name = "NoCarLight";
+			this.NoCarLight.Size = new System.Drawing.Size(43, 30);
+			this.NoCarLight.TabIndex = 37;
+			this.NoCarLight.Text = "●";
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Location = new System.Drawing.Point(50, 370);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(102, 23);
+			this.label16.TabIndex = 36;
+			this.label16.Text = "Have Car";
 			// 
 			// label15
 			// 
@@ -584,57 +641,166 @@
 			this.label11.TabIndex = 0;
 			this.label11.Text = "Smart Car Parking (National Institute of Electronics)";
 			// 
-			// label16
+			// ethConfiggroupBox
 			// 
-			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(50, 370);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(102, 23);
-			this.label16.TabIndex = 36;
-			this.label16.Text = "Have Car";
+			this.ethConfiggroupBox.Controls.Add(this.listenstatelabel);
+			this.ethConfiggroupBox.Controls.Add(this.deviceIPstatelabel);
+			this.ethConfiggroupBox.Controls.Add(this.startListenbutton);
+			this.ethConfiggroupBox.Controls.Add(this.deviceIPlabel);
+			this.ethConfiggroupBox.Controls.Add(this.connectstatelabel);
+			this.ethConfiggroupBox.Controls.Add(this.label87);
+			this.ethConfiggroupBox.Controls.Add(this.severPorttextBox);
+			this.ethConfiggroupBox.Controls.Add(this.severPortlabel);
+			this.ethConfiggroupBox.Controls.Add(this.severIPcomboBox);
+			this.ethConfiggroupBox.Controls.Add(this.severIPlabel);
+			this.ethConfiggroupBox.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Bold);
+			this.ethConfiggroupBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(111)))), ((int)(((byte)(61)))));
+			this.ethConfiggroupBox.Location = new System.Drawing.Point(9, 202);
+			this.ethConfiggroupBox.Margin = new System.Windows.Forms.Padding(4);
+			this.ethConfiggroupBox.Name = "ethConfiggroupBox";
+			this.ethConfiggroupBox.Padding = new System.Windows.Forms.Padding(4);
+			this.ethConfiggroupBox.Size = new System.Drawing.Size(987, 143);
+			this.ethConfiggroupBox.TabIndex = 16;
+			this.ethConfiggroupBox.TabStop = false;
+			this.ethConfiggroupBox.Text = "Ethernet  Port Set";
 			// 
-			// NoCarLight
+			// listenstatelabel
 			// 
-			this.NoCarLight.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.NoCarLight.AutoSize = true;
-			this.NoCarLight.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.NoCarLight.ForeColor = System.Drawing.Color.DarkGray;
-			this.NoCarLight.Location = new System.Drawing.Point(706, 370);
-			this.NoCarLight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.NoCarLight.Name = "NoCarLight";
-			this.NoCarLight.Size = new System.Drawing.Size(43, 30);
-			this.NoCarLight.TabIndex = 37;
-			this.NoCarLight.Text = "●";
+			this.listenstatelabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.listenstatelabel.AutoSize = true;
+			this.listenstatelabel.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.listenstatelabel.ForeColor = System.Drawing.Color.DarkGray;
+			this.listenstatelabel.Location = new System.Drawing.Point(706, 37);
+			this.listenstatelabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.listenstatelabel.Name = "listenstatelabel";
+			this.listenstatelabel.Size = new System.Drawing.Size(43, 30);
+			this.listenstatelabel.TabIndex = 6;
+			this.listenstatelabel.Text = "●";
 			// 
-			// label18
+			// deviceIPstatelabel
 			// 
-			this.label18.AutoSize = true;
-			this.label18.Location = new System.Drawing.Point(508, 370);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(79, 23);
-			this.label18.TabIndex = 38;
-			this.label18.Text = "No Car";
-			this.label18.Click += new System.EventHandler(this.label18_Click);
+			this.deviceIPstatelabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.deviceIPstatelabel.AutoSize = true;
+			this.deviceIPstatelabel.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.deviceIPstatelabel.ForeColor = System.Drawing.Color.Black;
+			this.deviceIPstatelabel.Location = new System.Drawing.Point(202, 93);
+			this.deviceIPstatelabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.deviceIPstatelabel.Name = "deviceIPstatelabel";
+			this.deviceIPstatelabel.Size = new System.Drawing.Size(61, 22);
+			this.deviceIPstatelabel.TabIndex = 14;
+			this.deviceIPstatelabel.Text = "0.0.0.0";
 			// 
-			// haveCarLight
+			// startListenbutton
 			// 
-			this.haveCarLight.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.haveCarLight.AutoSize = true;
-			this.haveCarLight.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.haveCarLight.ForeColor = System.Drawing.Color.DarkGray;
-			this.haveCarLight.Location = new System.Drawing.Point(284, 370);
-			this.haveCarLight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.haveCarLight.Name = "haveCarLight";
-			this.haveCarLight.Size = new System.Drawing.Size(43, 30);
-			this.haveCarLight.TabIndex = 39;
-			this.haveCarLight.Text = "●";
+			this.startListenbutton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(111)))), ((int)(((byte)(61)))));
+			this.startListenbutton.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold);
+			this.startListenbutton.ForeColor = System.Drawing.Color.White;
+			this.startListenbutton.Location = new System.Drawing.Point(775, 31);
+			this.startListenbutton.Margin = new System.Windows.Forms.Padding(4);
+			this.startListenbutton.Name = "startListenbutton";
+			this.startListenbutton.Size = new System.Drawing.Size(135, 54);
+			this.startListenbutton.TabIndex = 10;
+			this.startListenbutton.Text = "Start  Listen";
+			this.startListenbutton.UseVisualStyleBackColor = false;
+			this.startListenbutton.Click += new System.EventHandler(this.startListenbutton_Click_1);
+			// 
+			// deviceIPlabel
+			// 
+			this.deviceIPlabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.deviceIPlabel.AutoSize = true;
+			this.deviceIPlabel.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.deviceIPlabel.ForeColor = System.Drawing.Color.Black;
+			this.deviceIPlabel.Location = new System.Drawing.Point(118, 93);
+			this.deviceIPlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.deviceIPlabel.Name = "deviceIPlabel";
+			this.deviceIPlabel.Size = new System.Drawing.Size(74, 22);
+			this.deviceIPlabel.TabIndex = 13;
+			this.deviceIPlabel.Text = "WDC  IP:";
+			// 
+			// connectstatelabel
+			// 
+			this.connectstatelabel.AutoSize = true;
+			this.connectstatelabel.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.connectstatelabel.ForeColor = System.Drawing.Color.Black;
+			this.connectstatelabel.Location = new System.Drawing.Point(447, 93);
+			this.connectstatelabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.connectstatelabel.Name = "connectstatelabel";
+			this.connectstatelabel.Size = new System.Drawing.Size(149, 22);
+			this.connectstatelabel.TabIndex = 12;
+			this.connectstatelabel.Text = "Waiting  Connect...";
+			// 
+			// label87
+			// 
+			this.label87.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.label87.AutoSize = true;
+			this.label87.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label87.ForeColor = System.Drawing.Color.Black;
+			this.label87.Location = new System.Drawing.Point(378, 93);
+			this.label87.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label87.Name = "label87";
+			this.label87.Size = new System.Drawing.Size(122, 22);
+			this.label87.TabIndex = 11;
+			this.label87.Text = "Connect  State:";
+			// 
+			// severPorttextBox
+			// 
+			this.severPorttextBox.Font = new System.Drawing.Font("Calibri", 10.5F);
+			this.severPorttextBox.Location = new System.Drawing.Point(512, 36);
+			this.severPorttextBox.Margin = new System.Windows.Forms.Padding(4);
+			this.severPorttextBox.Name = "severPorttextBox";
+			this.severPorttextBox.Size = new System.Drawing.Size(171, 29);
+			this.severPorttextBox.TabIndex = 9;
+			this.severPorttextBox.Text = "6000";
+			// 
+			// severPortlabel
+			// 
+			this.severPortlabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.severPortlabel.AutoSize = true;
+			this.severPortlabel.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.severPortlabel.ForeColor = System.Drawing.Color.Black;
+			this.severPortlabel.Location = new System.Drawing.Point(400, 45);
+			this.severPortlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.severPortlabel.Name = "severPortlabel";
+			this.severPortlabel.Size = new System.Drawing.Size(100, 22);
+			this.severPortlabel.TabIndex = 8;
+			this.severPortlabel.Text = "Server  Port:";
+			// 
+			// severIPcomboBox
+			// 
+			this.severIPcomboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.severIPcomboBox.Font = new System.Drawing.Font("Calibri", 10.5F);
+			this.severIPcomboBox.FormattingEnabled = true;
+			this.severIPcomboBox.Items.AddRange(new object[] {
+            "192.168.1.2",
+            "119.78.248.11",
+            "192.168.1.103",
+            "192.168.100.106"});
+			this.severIPcomboBox.Location = new System.Drawing.Point(206, 38);
+			this.severIPcomboBox.Margin = new System.Windows.Forms.Padding(4);
+			this.severIPcomboBox.Name = "severIPcomboBox";
+			this.severIPcomboBox.Size = new System.Drawing.Size(171, 29);
+			this.severIPcomboBox.TabIndex = 7;
+			// 
+			// severIPlabel
+			// 
+			this.severIPlabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.severIPlabel.AutoSize = true;
+			this.severIPlabel.Font = new System.Drawing.Font("Calibri", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.severIPlabel.ForeColor = System.Drawing.Color.Black;
+			this.severIPlabel.Location = new System.Drawing.Point(108, 43);
+			this.severIPlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.severIPlabel.Name = "severIPlabel";
+			this.severIPlabel.Size = new System.Drawing.Size(83, 22);
+			this.severIPlabel.TabIndex = 6;
+			this.severIPlabel.Text = "Server  IP:";
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Window;
-			this.ClientSize = new System.Drawing.Size(1009, 653);
+			this.ClientSize = new System.Drawing.Size(1009, 785);
+			this.Controls.Add(this.ethConfiggroupBox);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.richTextBox1);
@@ -653,6 +819,8 @@
 			this.groupBox2.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.ethConfiggroupBox.ResumeLayout(false);
+			this.ethConfiggroupBox.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -699,6 +867,17 @@
 		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.Label NoCarLight;
 		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.GroupBox ethConfiggroupBox;
+		private System.Windows.Forms.Label listenstatelabel;
+		private System.Windows.Forms.Label deviceIPstatelabel;
+		private System.Windows.Forms.Button startListenbutton;
+		private System.Windows.Forms.Label deviceIPlabel;
+		private System.Windows.Forms.Label connectstatelabel;
+		private System.Windows.Forms.Label label87;
+		private System.Windows.Forms.TextBox severPorttextBox;
+		private System.Windows.Forms.Label severPortlabel;
+		private System.Windows.Forms.ComboBox severIPcomboBox;
+		private System.Windows.Forms.Label severIPlabel;
 	}
 }
 

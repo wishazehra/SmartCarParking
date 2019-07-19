@@ -30,7 +30,45 @@ namespace ParkingDemo
 		};
 
 		IFirebaseClient firebaseClient;
-        /// <summary>
+
+		/// <summary>
+		/// <remarks>serialPort State</remarks>
+		/// </summary>
+		private bool commState = false;
+		/// <summary>
+		/// <remarks>Ethernet State</remarks>
+		/// </summary>
+		private bool ethNetOpenState = false;
+		/// <summary>
+		/// <remarks>SerialPort Instantiation</remarks>
+		/// </summary>
+		public static ParkingSystem.ParkingSerialPort serialPort = new ParkingSerialPort();
+		/// <summary>
+		/// <remarks>TCP Instantiation</remarks>
+		/// </summary>
+		public static ParkingSystem.ParkingRemoteTCP wapper = new ParkingRemoteTCP();
+		/// <summary>
+		/// <remarks>tcp Listener</remarks>
+		/// </summary>
+		private static TcpListener tcpListener = null;
+		/// <summary>
+		/// <remarks>IP Address</remarks>
+		/// </summary>
+		private static IPAddress localIP;
+		/// <summary>
+		/// <remarks>TCP portNum</remarks>
+		/// </summary>
+		private static UInt16 portNum;
+		/// <summary>
+		/// <remarks>Tcp Client</remarks>
+		/// </summary>
+		private static TcpClient client = new TcpClient();
+		/// <summary>
+		/// <remarks>Tcp Thread</remarks>
+		/// </summary>
+		private Thread m_serverThread;
+
+		/*/// <summary>
         /// <remarks>serialPort State</remarks>
         /// </summary>
         private bool commState = false;
@@ -47,9 +85,9 @@ namespace ParkingDemo
         /// <summary>
         /// <remarks>Tcp Client</remarks>
         /// </summary>
-        private static TcpClient client = new TcpClient();
-        
-        public Form1()
+        private static TcpClient client = new TcpClient();*/
+
+		public Form1()
         {
             InitializeComponent();
         }
@@ -76,6 +114,7 @@ namespace ParkingDemo
 			}
 			
 			CommInit();
+			EthCommInit();
             ParkingOriginalPacket.EvProcessReceivedPacket += sp_ProcessReceivedPacket;
         }
 
@@ -209,15 +248,181 @@ namespace ParkingDemo
             }
             return devname;
         }
-        #endregion
+		#endregion
 
+		#region Ethernet Operation
+		/// <summary>
+		/// Ethernet Initialize
+		/// </summary>
+		private void EthCommInit()
+		{
+			string addresses = GetLocalAddresses();
+			severIPcomboBox.Items.Clear();
+			if (addresses.Length > 0)
+			{
 
-        #region Received Process
-        /// <summary>
-        /// <remarks>Process Received Packet</remarks>
-        /// </summary>
-        /// <param name="pk">Received Packet</param>
-        private void sp_ProcessReceivedPacket(baseReceivedPacket pk)
+				severIPcomboBox.Items.Add(addresses);
+
+				severIPcomboBox.Text = (string)severIPcomboBox.Items[0];
+			}
+		}
+		/// <summary>
+		/// Get Local IP Address
+		/// </summary>
+		public string GetLocalAddresses()
+		{
+			// 获取主机名
+			string strHostName = Dns.GetHostName();
+			System.Net.IPAddress addr;
+			addr = new System.Net.IPAddress(Dns.GetHostByName(Dns.GetHostName()).AddressList[0].Address);
+			return addr.ToString();
+		}
+		/// <summary>
+		/// Set Ethernet Close
+		/// </summary>
+		private void eth_Setclose()
+		{
+			connectstatelabel.Text = "Waiting  Connect...";
+			ethNetOpenState = false;
+			listenstatelabel.ForeColor = Color.DarkGray;
+			startListenbutton.Text = "Start  Listen";
+			deviceIPstatelabel.Text = "";
+
+		}
+		/// <summary>
+		/// startListenbutton_Click Oper
+		/// </summary>
+		/// /// <param name="sender">sender</param>
+		/// <param name="e">e</param>
+		private void startListenbutton_Click(object sender, EventArgs e)
+		{
+			deviceIPstatelabel.Text = "";
+			try
+			{
+				if (severPorttextBox.Text != "")
+				{
+					if (startListenbutton.Text == "Start  Listen")
+					{
+						portNum = UInt16.Parse(severPorttextBox.Text);
+						if (portNum > 0 && portNum < 65535)
+						{
+							TCP_StartListen();
+							ethNetOpenState = true;
+							startListenbutton.Text = "Stop  Listen";
+							connectstatelabel.Text = "Listening...";
+						}
+						else
+						{
+							MessageBox.Show("Port Range:1~65535!");
+							return;
+						}
+
+					}
+					else
+					{
+						try
+						{
+							if (connectstatelabel.Text == "Listening...")
+							{
+								tcpListener.Stop();
+							}
+							else
+							{
+								tcpListener.Stop();
+								m_serverThread.Abort();
+								m_serverThread = null; //中止线程
+
+								client.Close();
+							}
+							eth_Setclose();
+						}
+						catch (SocketException ex)
+						{
+							MessageBox.Show("TCP Server Listen Error!" + ex.Message);
+						}
+
+					}
+				}
+				else
+				{
+					MessageBox.Show("Please input Port Adress!");
+				}
+			}
+			catch (ThreadAbortException exl)
+			{
+				MessageBox.Show("TCP Server Button Error:" + exl.ToString());
+			}
+			catch (SocketException se)           //处理异常
+			{
+				MessageBox.Show("TCP Server Listen Error:" + se.Message);
+			}
+			catch (Exception ex)
+			{
+				tcpListener.Stop();
+				client.Close();
+				MessageBox.Show("TCP Server Button Error:" + ex.ToString());
+			}
+		}
+		/// <summary>
+		/// Start TCP Listening
+		/// </summary>
+		public void TCP_StartListen()
+		{
+			try
+			{
+				localIP = IPAddress.Parse(this.severIPcomboBox.Text);
+				tcpListener = new TcpListener(localIP, portNum);
+				tcpListener.Start();
+				m_serverThread = new Thread(new ThreadStart(ReceiveAccept));
+				m_serverThread.Start();
+				m_serverThread.IsBackground = true;
+
+			}
+			catch (SocketException ex)
+			{
+				tcpListener.Stop();
+				eth_Setclose();
+				MessageBox.Show("TCP Server Listen Error:" + ex.Message);
+			}
+			catch (Exception err)
+			{
+				MessageBox.Show("TCP Server Listen Error:" + err.Message);
+			}
+		}
+		/// <summary>
+		/// TCP Client Accept
+		/// </summary>
+		private void ReceiveAccept()
+		{
+			while (true)
+			{
+				try
+				{
+					client = tcpListener.AcceptTcpClient();
+					this.Invoke((EventHandler)delegate
+					{
+						this.listenstatelabel.ForeColor = Color.Lime;
+						this.connectstatelabel.Text = "connect ok";
+						this.deviceIPstatelabel.Text = client.Client.RemoteEndPoint.ToString();
+						ethNetOpenState = true;
+					});
+					wapper = new ParkingRemoteTCP(client);
+				}
+				catch (Exception ex)
+				{
+					//eth_Setclose();
+					// MessageBox.Show(ex.Message, "?", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+			}
+		}
+		#endregion
+
+		#region Received Process
+		/// <summary>
+		/// <remarks>Process Received Packet</remarks>
+		/// </summary>
+		/// <param name="pk">Received Packet</param>
+		private void sp_ProcessReceivedPacket(baseReceivedPacket pk)
         {
             try
             {
@@ -271,11 +476,12 @@ namespace ParkingDemo
 						setColor(wpsdid, car);
 						if (data != null)
 						{
-							SetResponse response = 
-							await firebaseClient.SetTaskAsync("Sensors/sensor" + wpsdid, data);
+							//SetResponse response = 
+							//await firebaseClient.SetTaskAsync("Sensors/sensor" + wpsdid, data);
 
-							Data result = response.ResultAs<Data>();
-							MessageBox.Show("Data Inserted");
+							//Data result = response.ResultAs<Data>();
+							//MessageBox.Show("Data Inserted");
+							MessageBox.Show("Data: " + wpsdid + car);
 						}
 						
 					}
@@ -308,9 +514,9 @@ namespace ParkingDemo
 							signalStrength = RSSI,
 							spaceState = car
 						};
-						SetResponse response = await firebaseClient.SetTaskAsync("Sensors/sensor" + wpsdid, data);
-						Data result = response.ResultAs<Data>();
-						MessageBox.Show("Data Inserted");
+						// response = await firebaseClient.SetTaskAsync("Sensors/sensor" + wpsdid, data);
+						//Data result = response.ResultAs<Data>();
+						MessageBox.Show("Data: "+wpsdid+ car);
 					}
                     #endregion
                 });
@@ -505,6 +711,77 @@ namespace ParkingDemo
 		private void label18_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void startListenbutton_Click_1(object sender, EventArgs e)
+		{
+
+			deviceIPstatelabel.Text = "";
+			try
+			{
+				if (severPorttextBox.Text != "")
+				{
+					if (startListenbutton.Text == "Start  Listen")
+					{
+						portNum = UInt16.Parse(severPorttextBox.Text);
+						if (portNum > 0 && portNum < 65535)
+						{
+							TCP_StartListen();
+							ethNetOpenState = true;
+							startListenbutton.Text = "Stop  Listen";
+							connectstatelabel.Text = "Listening...";
+						}
+						else
+						{
+							MessageBox.Show("Port Range:1~65535!");
+							return;
+						}
+
+					}
+					else
+					{
+						try
+						{
+							if (connectstatelabel.Text == "Listening...")
+							{
+								tcpListener.Stop();
+							}
+							else
+							{
+								tcpListener.Stop();
+								m_serverThread.Abort();
+								m_serverThread = null; //中止线程
+
+								client.Close();
+							}
+							eth_Setclose();
+						}
+						catch (SocketException ex)
+						{
+							MessageBox.Show("TCP Server Listen Error!" + ex.Message);
+						}
+
+					}
+				}
+				else
+				{
+					MessageBox.Show("Please input Port Adress!");
+				}
+			}
+			catch (ThreadAbortException exl)
+			{
+				MessageBox.Show("TCP Server Button Error:" + exl.ToString());
+			}
+			catch (SocketException se)           //处理异常
+			{
+				MessageBox.Show("TCP Server Listen Error:" + se.Message);
+			}
+			catch (Exception ex)
+			{
+				tcpListener.Stop();
+				client.Close();
+				MessageBox.Show("TCP Server Button Error:" + ex.ToString());
+			}
 		}
 	}
 }
