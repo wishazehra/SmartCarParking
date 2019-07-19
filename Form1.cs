@@ -301,7 +301,7 @@ namespace ParkingDemo
 			{
 				if (severPorttextBox.Text != "")
 				{
-					if (startListenbutton.Text == "Start  Listen")
+					if (startListenbutton.Text == "Start Listen")
 					{
 						portNum = UInt16.Parse(severPorttextBox.Text);
 						if (portNum > 0 && portNum < 65535)
