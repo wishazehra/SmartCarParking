@@ -295,7 +295,7 @@
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBox2.Size = new System.Drawing.Size(987, 429);
+			this.groupBox2.Size = new System.Drawing.Size(987, 449);
 			this.groupBox2.TabIndex = 15;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Sensor Status";
@@ -799,7 +799,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Window;
-			this.ClientSize = new System.Drawing.Size(1009, 785);
+			this.ClientSize = new System.Drawing.Size(1009, 822);
 			this.Controls.Add(this.ethConfiggroupBox);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.groupBox2);
