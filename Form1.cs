@@ -296,7 +296,7 @@ namespace ParkingDemo
 		/// <param name="e">e</param>
 		private void startListenbutton_Click(object sender, EventArgs e)
 		{
-			deviceIPstatelabel.Text = "";
+			deviceIPstatelabel.Text = "what";
 			try
 			{
 				if (severPorttextBox.Text != "")
